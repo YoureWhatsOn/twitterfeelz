@@ -1,0 +1,103 @@
+<a name="top"></a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+var someJavaScriptVar = '{{ foo }}'; 
+
+// Overly verbose so we know what's in data.  
+var user1 = user2 = hashtag = ''; 
+var data = { 
+	"foo":"Porsche", 
+	"user1": user1,
+	"user2": user2,
+	"hashtag": hashtag
+};
+
+window.onload = function() {
+	document.getElementById("theButton").onclick = function() {
+		makeItSo();
+	};
+}
+
+function makeItSo() {
+	var xhr = new XMLHttpRequest(); // (usually set to http)
+	var url = '/appdata';
+	
+	// actually, we should do client side validation ;-) 
+	var user1 = document.getElementById("user1").value;
+	var user2 = document.getElementById("user2").value;
+	var user3 = document.getElementById("user3").value;
+        var params = {'user1':user1,'user2':user2,'user3':user3};
+	xhr.open("POST", url, true);
+
+	//Send the proper header information along with the request. May not precede open. 
+	//xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); // why. 
+	xhr.setRequestHeader("Content-Type", "application/json");
+
+	xhr.onreadystatechange = function () {
+	    if (xhr.readyState === 4 && xhr.status === 200) {
+		//alert(xhr.responseText);
+		
+	    }
+
+	};
+	//var data = JSON.stringify({"email": "hey@mail.com", "foo": "barr"});
+	var data = JSON.stringify(params);
+	//xhr.send(data).done(alert('done!'));
+	xhr.send(data);
+
+	//updateImage('user1graph', '/static/ /sapient_4u.png');
+        updateImage();
+
+	return false;
+}
+
+//function updateImage(id, url) {
+function updateImage() {
+	var pic = document.getElementById('user1graph');
+	var user = document.getElementById("user1").value;
+	var name = user.replace(/^@/, '');
+	url = '/static/' + name + '.png';
+	alert('starting loop');
+	while (!imageExists(url)) {	
+		console.log('nope');
+		imageExists(url);	
+	};
+	pic.src = url;
+	
+}
+
+function imageExists(url){
+
+    var http = new XMLHttpRequest();
+
+    http.open('HEAD', url, false);
+    http.send();
+
+    return http.status != 404;
+}
+
+</script>
+
+<p>Compare Twitter users' emotional/factual bias. Compare 2 users to each other, or see which of 2 users a 3rd user is more aligned with.</p> 
+<label>
+<input type="text" id="user1" placeholder="1st Twitter User"></label><br />
+<label>
+<input type="text" id="user2" placeholder="2nd Twitter User"></label><br />
+<label>
+<input type="text" id="user3" placeholder="3rd Twitter User"> (optional)</label><br />
+<label>
+<input type="checkbox" name="checkbox" value="value">Include hashtags in sentiment analysis?</label><br />
+<label>
+<input type="checkbox" name="checkbox" value="value">Overlay mode? (1 graph for both users)</label><br />
+<br />
+This will send the data using AJAX to Python:<br />
+<a href="#" id="theButton">Analyze Sentiment</a>
+
+<h3>Sentiment Analysis, User 1:</h3>
+<script>
+//	var user1 = document.getElementById("user1").value;
+</script>
+<img id="user1graph" src="/static/sapient_4u.png" />
+<!-- img id="user1graph" src="https://redtricom.files.wordpress.com/2016/01/cool-mess-ice-cream-neon.jpg" -->
+
