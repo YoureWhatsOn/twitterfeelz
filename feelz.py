@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from textblob import TextBlob
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 from flask import Flask, render_template, request, redirect, Response, jsonify
 
 import logging
@@ -14,6 +15,13 @@ def logit(logmsg):
 logit('initializing') 
 
 pd.set_option('display.max_colwidth', -1)
+
+options = Options()
+options.add_argument('--headless')
+options.add_argument('--disable-gpu')  # Last I checked this was necessary.
+options.add_argument('--disable-extensions')
+options.add_argument('--no-sandbox')
+browser = webdriver.Chrome('./chromedriver', chrome_options=options)
 
 app = Flask(__name__)
 
@@ -45,7 +53,7 @@ def getUsers(data):
 	global name1 
 	name1 = '@' + user1.lstrip('@')
 	url = base_url + name1
-	browser = webdriver.Chrome()
+	# browser = webdriver.Chrome()
 	browser.get(url)
 	n = 1 
 	tweets = browser.find_elements_by_class_name('TweetTextSize')
@@ -98,6 +106,6 @@ def getSent(data):
 if __name__ == '__main__':
 	# sys output not working? 
 	sys.stdout = open('file.log', 'w')
-	app.run()
+	app.run(host='0.0.0.0')
 
 sys.exit()
