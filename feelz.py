@@ -89,13 +89,11 @@ def getSent(data):
 	    plt.text(x+.001, y+.001, data['lines'][index], fontsize=10)
 	    plt.xlim(-.01, 2.0) 
 	plt.title('Tweet Sentiment Analysis', fontsize=20)
-	plt.ylabel('<-- Negative -------- Positive -->', fontsize=15)
-	plt.xlabel('<-- Facts -------- Opinions -->', fontsize=15)
+	plt.ylabel('<-- Negative --- ATTITUDE ---- Positive -->', fontsize=15)
+	plt.xlabel('<-- Facts --- BIAS ---- Opinions -->', fontsize=15)
 
 	name = name1.lstrip('@') 
 	plt.savefig('Static/' + name + '.png')
-
-
 
 if __name__ == '__main__':
 	# sys output not working? 
