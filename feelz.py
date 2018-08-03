@@ -1,7 +1,10 @@
 import sys, random, time, json
 import pandas as pd
 import pickle as pickle 
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
 from textblob import TextBlob
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -31,8 +34,11 @@ def appdata():
 # save sentiment maps 
 
 def sentiTweet(data):
+	tweets = []
 	tweets = getUsers(data)
+	lines = []
 	lines = createList(tweets)
+	data = []
 	data = getPickl(lines)
 	sentiment = getSent(data)
 	return 'okok'
@@ -91,9 +97,10 @@ def getSent(data):
 	plt.title('Tweet Sentiment Analysis', fontsize=20)
 	plt.ylabel('<-- Negative --- ATTITUDE ---- Positive -->', fontsize=15)
 	plt.xlabel('<-- Facts --- BIAS ---- Opinions -->', fontsize=15)
-
 	name = name1.lstrip('@') 
-	plt.savefig('Static/' + name + '.png')
+	logit(name)
+	plt.savefig('static/' + name + '.png')
+	logit("DONE")
 
 if __name__ == '__main__':
 	# sys output not working? 
