@@ -27,6 +27,7 @@ def output():
 
 @app.route('/appdata', methods = ['POST'])
 def appdata():
+	data = []
 	data = request.get_json()
 	sentiTweet(data)	
 	return('something')
@@ -40,6 +41,7 @@ def sentiTweet(data):
 	lines = createList(tweets)
 	data = []
 	data = getPickl(lines)
+	sentiment = []
 	sentiment = getSent(data)
 	return 'okok'
 
@@ -102,9 +104,10 @@ def getSent(data):
 	plt.savefig('static/' + name + '.png')
 	logit("DONE")
 
+# @TODO check local hostname to run on localhost
 if __name__ == '__main__':
 	# sys output not working? 
 	sys.stdout = open('file.log', 'w')
-	app.run()
+	app.run(host='0.0.0.0')
 
 sys.exit()
