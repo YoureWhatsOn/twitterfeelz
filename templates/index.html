@@ -58,7 +58,6 @@ function updateImage() {
 	var user = document.getElementById("user1").value;
 	var name = user.replace(/^@/, '');
 	url = '/static/' + name + '.png';
-	alert('starting loop');
 	while (!imageExists(url)) {	
 		console.log('nope');
 		imageExists(url);	
@@ -91,13 +90,13 @@ function imageExists(url){
 <label>
 <input type="checkbox" name="checkbox" value="value">Overlay mode? (1 graph for both users)</label><br />
 <br />
-This will send the data using AJAX to Python:<br />
-<a href="#" id="theButton">Analyze Sentiment</a>
+<i>NOTE: demo (free) version only supports 1 user report</i>.<br />
+<a href="#" id="theButton">Analyze Attitude</a>
 
 <h3>Sentiment Analysis, User 1:</h3>
 <script>
 //	var user1 = document.getElementById("user1").value;
 </script>
-<img id="user1graph" src="/static/sapient_4u.png" />
+<img id="user1graph" src="" />
 <!-- img id="user1graph" src="https://redtricom.files.wordpress.com/2016/01/cool-mess-ice-cream-neon.jpg" -->
 
