@@ -1,7 +1,6 @@
-import sys, random, time, json
+import os, sys, random, time, json
 import pandas as pd
 import pickle as pickle 
-#import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
 from matplotlib import pyplot as plt
@@ -21,7 +20,7 @@ pd.set_option('display.max_colwidth', -1)
 
 options = Options()
 options.add_argument('--headless')
-options.add_argument('--disable-gpu')  # Last I checked this was necessary.
+options.add_argument('--disable-gpu') 
 options.add_argument('--disable-extensions')
 options.add_argument('--no-sandbox')
 browser = webdriver.Chrome('./chromedriver', chrome_options=options)
@@ -29,18 +28,15 @@ browser = webdriver.Chrome('./chromedriver', chrome_options=options)
 app = Flask(__name__)
 
 @app.route('/')
-#@app.route('/index')
 def output():
-	return render_template('index.html', name='Twitter Feelz', foo='maz')
+	return render_template('index.html', name='Twitter Feelz')
 
 @app.route('/appdata', methods = ['POST'])
 def appdata():
 	data = []
 	data = request.get_json()
 	sentiTweet(data)	
-	return('something')
-
-# save sentiment maps 
+	return('sentiment')
 
 def sentiTweet(data):
 	tweets = []
@@ -57,7 +53,7 @@ def getUsers(data):
 	base_url = u'https://twitter.com/search?q='
 	user1 = data['user1']
 	user2 = data['user2']
-	tweets1 = []
+	tweets = []
 	global name1 
 	name1 = '@' + user1.lstrip('@')
 	url = base_url + name1
@@ -69,18 +65,25 @@ def getUsers(data):
 		for tweet in tweets:
 			file.write("%s\n" % tweet.text)
 			#pickle.dump(tweet.text, file)
+	# why return?
 	return tweets
 
+# createList doesn't require an argument
 def createList(tweets):
 	# create comma deliniated list of tweets from file
 	# coding isn't hard, so don't hardcode! 
+	lines = []
 	lines = open('newtw1.txt').read().splitlines()
+	os.remove('newtw1.txt')
 	print(len(lines))
 	return lines 
 
 def getPickl(lines):
 	# df1 = pd.read_pickle()
+	data = []
 	data= pd.DataFrame({'lines': lines})
+	for d in data:
+		logit(d)
 	return data
 
 def getSent(data):
@@ -95,10 +98,9 @@ def getSent(data):
 	user_subjective = str(data['subjectivity'].mean())
 	logit('polarity is ' + user_polarity)
 	logit('subjectivity is ' + user_subjective)
-
 	plt.rcParams['figure.figsize'] = [10, 8]
-	logit(data.index)
 	for index, tweet in enumerate(data.index):
+	    logit(data['lines'][index])
 	    y = data.polarity.loc[tweet]
 	    x = data.subjectivity.loc[tweet]
 	    plt.scatter(x, y, color='blue')
@@ -110,6 +112,7 @@ def getSent(data):
 	name = name1.lstrip('@') 
 	logit(name)
 	plt.savefig('static/' + name + '.png')
+	plt.clf()
 	logit("DONE")
 
 # @TODO check local hostname to run on localhost
