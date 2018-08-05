@@ -57,8 +57,12 @@ function updateImage() {
 	var pic = document.getElementById('user1graph');
 	var user = document.getElementById("user1").value;
 	var name = user.replace(/^@/, '');
+        spin = '/static/img/spinner1.gif';	
+	pic.src = spin;
+	setTimeout(alert('nada'),3000);
 	url = '/static/' + name + '.png';
 	while (!imageExists(url)) {	
+		pic.src = spin;
 		console.log('nope');
 		imageExists(url);	
 	};
