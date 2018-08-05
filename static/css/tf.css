@@ -1,4 +1,48 @@
-#wrapper {
-    width: 500px;
+.wrapper {
+    width: 100%;
     margin: 0 auto;
+}
+
+#user1-col {
+    float: left;
+    padding: 2%;
+    width: 48%;
+    background-color: green;
+}
+
+#user2-col {
+    float: right;
+    padding: 2%;
+    width: 48%;
+}
+@media all and (max-width : 768px) {
+    header {
+        text-align: center;
+    }
+    nav {
+        text-align: center;
+    }
+    #user1-col {
+        width: 94%;
+        padding: 3%;
+    }
+    #user2-col {
+        width: 94%;
+        padding: 3%;
+        border-top: 3px solid #E64A19;
+    }
+}
+
+@media all and (max-width : 480px) {
+    #user1-col {
+        display:block;
+        width: 94%;
+    }
+}
+
+@media all and (max-width : 330px) {
+    #user2-col {
+        display:block;
+        width: 94%;
+    }
 }

@@ -26,6 +26,7 @@ options.add_argument('--no-sandbox')
 browser = webdriver.Chrome('./chromedriver', chrome_options=options)
 
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.route('/')
 def output():
@@ -59,6 +60,7 @@ def getUsers(data):
 	url = base_url + name1
 	# browser = webdriver.Chrome()
 	browser.get(url)
+	# @FIXME need to confirm 200 response before continuing. 
 	n = 1 
 	tweets = browser.find_elements_by_class_name('TweetTextSize')
 	with open('newtw'+ str(n) +'.txt', 'w') as file:

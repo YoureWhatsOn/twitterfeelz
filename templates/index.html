@@ -58,8 +58,8 @@ function updateImage() {
 	var user = document.getElementById("user1").value;
 	var name = user.replace(/^@/, '');
         spin = '/static/img/spinner1.gif';	
+	// @FIXME Why isn't spinner working? 
 	pic.src = spin;
-	setTimeout(alert('nada'),3000);
 	url = '/static/' + name + '.png';
 	while (!imageExists(url)) {	
 		pic.src = spin;
@@ -81,26 +81,45 @@ function imageExists(url){
 }
 
 </script>
+<html><head><title>Twitter Sentiment Analysis Tool</title>
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
 
-<p>Compare Twitter users' emotional/factual bias. Compare 2 users to each other, or see which of 2 users a 3rd user is more aligned with.</p> 
-<label>
-<input type="text" id="user1" placeholder="1st Twitter User"></label><br />
-<label>
-<input type="text" id="user2" placeholder="2nd Twitter User"></label><br />
-<label>
-<input type="text" id="user3" placeholder="3rd Twitter User"> (optional)</label><br />
-<label>
-<input type="checkbox" name="checkbox" value="value">Include hashtags in sentiment analysis?</label><br />
-<label>
-<input type="checkbox" name="checkbox" value="value">Overlay mode? (1 graph for both users)</label><br />
-<br />
-<i>NOTE: demo (free) version only supports 1 user report</i>.<br />
-<a href="#" id="theButton">Analyze Attitude</a>
+<div class="wrapper" style="background-color:#f8f8ff">
+  <div class="container" style="padding: 0 10%">
+      <header id=”header”> 
+<h1 align="center">Twitter Feelz</h1>    
+<p>A tool to analyze Twitter users using sentiment analysis to determine where a user falls on a scale of opinionated versus factualness, and whether their attitude is more positive, or more negative. Compare Twitter users' emotional/factual bias. Compare 2 users to each other, or see which of 2 users a 3rd user is more aligned with. (Advanced version)</p> 
+      </header>
+    <div class="form-group">
+    <label class="form-label">
+      <input type="text" id="user1" placeholder=" 1st Twitter User"></label><br />
+    <label class="form-label">
+      <input type="text" id="user2" placeholder=" 2nd Twitter User"></label><br />
+      <input type="text" id="user3" placeholder=" 3rd Twitter User"> (optional)</label><br />
+    <label class="form-label">
+      <input type="checkbox" name="checkbox" value="value"> Include hashtags in sentiment analysis?</label>
+    <label class="form-label">
+      <input type="checkbox" name="checkbox" value="value"> Overlay mode? (1 graph for both users)</label><br />
+<a href="#" class="btn btn-lg" id="theButton">Analyze Attitude</a>
+<i>NOTE: demo (free) version only supports 1 user report</i>.<br /><br />
+<div class="columns" style="background-color:yellow, width:100%">
+<div class="column col-6 col-sm-12 col-med-12 " id="user1-col" style="">
+<div class="card">
+<h3 style="padding-left: 1em" >Sentiment Analysis, User 1:</h3>
+<img class="img-responsive" id="user1graph" src="/static/img/tweet-sent-temp.png" />
+<!-- img id="user1graph" src="" --></div></div>
+<div class="column col-6 col-sm-12" id="user2-col" style="background-color">
+<div class="card">
+<h3 style="padding-left: 1em" >Sentiment Analysis, User 2:</h3>
+<img class="img-responsive" id="user21graph" src="/static/img/tweet-sent-temp.png" />
+<!-- img id="user2graph" src="/static/img/tweet-sent-temp.png" / -->
+</div>
+</div>
 
-<h3>Sentiment Analysis, User 1:</h3>
-<script>
-//	var user1 = document.getElementById("user1").value;
-</script>
-<img id="user1graph" src="" />
-<!-- img id="user1graph" src="https://redtricom.files.wordpress.com/2016/01/cool-mess-ice-cream-neon.jpg" -->
+</div>
+</div>
 
+<!-- img style="height:auto; width:auto, max-width:30px, object-fit:contain" id="user1graph" src="/static/img/tweet-sent-temp.png" / -->
