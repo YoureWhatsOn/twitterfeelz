@@ -1,3 +1,6 @@
 file.log
 newtw1.txt
 templates/.index.html.swp
+
+# ignore on master only
+chromedriver
